@@ -1,11 +1,8 @@
 package com.javatest.databaseTestApp.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.javatest.databaseTestApp.entity.type.Role;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,32 +13,28 @@ import java.util.Date;
 @Entity
 @Table(name = "user_table")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "surname", nullable = false)
-    private String surname;
+    @NotEmpty
+    @Column(name = "login")
+    private String login;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @NotEmpty
+    @Column(name = "password")
+    private String password;
 
-    @Column(name = "patronymic", nullable = false)
-    private String patronymic;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    @Column(name = "birthday", nullable = false)
-    private Date birthday;
-
-    @Column(name = "email", nullable = false)
-    private String email;
-
-    @Column(name = "phone_number", nullable = false)
-    private Integer phoneNumber;
+    @OneToOne(mappedBy = "user_id", fetch = FetchType.LAZY)
+    private UserDetails userDetails;
 
     @Column(name = "created_at")
     private Date createdAt;
