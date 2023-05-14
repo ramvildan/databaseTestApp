@@ -19,7 +19,7 @@ import java.util.Date;
 public class User {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -33,9 +33,6 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @OneToOne(mappedBy = "user_id", fetch = FetchType.LAZY)
-    private UserDetails userDetails;
 
     @Column(name = "created_at")
     private Date createdAt;
