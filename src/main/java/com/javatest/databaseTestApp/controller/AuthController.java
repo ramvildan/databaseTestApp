@@ -10,6 +10,7 @@ import com.javatest.databaseTestApp.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +32,8 @@ public class AuthController {
 
         JwtResponse token = authService.login(loginRequest);
 
-        return ResponseEntity.ok(token);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(token);
     }
 
     @PostMapping("token")
@@ -39,7 +41,8 @@ public class AuthController {
 
         JwtResponse token = authService.getAccessToken(request.getRefreshToken());
 
-        return ResponseEntity.ok(token);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(token);
     }
 
     @PostMapping("refresh")
@@ -47,15 +50,19 @@ public class AuthController {
 
         JwtResponse token = authService.getRefreshToken(request.getRefreshToken());
 
-        return ResponseEntity.ok(token);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(token);
     }
 
     @PostMapping("register")
-    public UserDto registrationNewUser(@RequestBody
+    public ResponseEntity<UserDto> registrationNewUser(@RequestBody
                                        @Valid UserCreateDto userCreateDto) {
 
         log.info("registrationNewUser: UserCreateDto = {}", userCreateDto);
 
-        return userService.createUser(userCreateDto);
+        UserDto createdUser = userService.createUser(userCreateDto);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(createdUser);
     }
 }

@@ -13,5 +13,5 @@ public interface UserService {
 
     UserDto createUser(@Valid UserCreateDto userCreateDto);
 
-    Optional<UserDto> getByLogin(@NotNull String login);
+    Optional<UserDto> getUserByLogin(@NotNull String login);
 }

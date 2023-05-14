@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
     public JwtResponse login(JwtRequest loginRequest) {
 
         User user = userConverter.fromUserDtoToUser(
-                userService.getByLogin(loginRequest.getLogin())
+                userService.getUserByLogin(loginRequest.getLogin())
                 .orElseThrow(() -> new UserNotFoundException(loginRequest.getLogin())));
 
         if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
@@ -65,7 +65,7 @@ public class AuthServiceImpl implements AuthService {
             if (!isNull(saveRefreshToken) && saveRefreshToken.equals(refreshToken)) {
 
                 User user = userConverter.fromUserDtoToUser(
-                        userService.getByLogin(login)
+                        userService.getUserByLogin(login)
                         .orElseThrow(() -> new UserNotFoundException(login)));
 
                 String accessToken = jwtProvider.generateAccessToken(user);
@@ -89,7 +89,7 @@ public class AuthServiceImpl implements AuthService {
             if (!isNull(saveRefreshToken) && saveRefreshToken.equals(refreshToken)) {
 
                 User user = userConverter.fromUserDtoToUser(
-                        userService.getByLogin(login)
+                        userService.getUserByLogin(login)
                                 .orElseThrow(() -> new UserNotFoundException(login)));
 
                 String newRefreshToken = jwtProvider.generateRefreshToken(user);

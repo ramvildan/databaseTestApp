@@ -7,6 +7,8 @@ import com.javatest.databaseTestApp.service.UserDetailsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,37 +30,43 @@ public class UserDetailsController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
-    public UserDetailsDto createUserDetails(@RequestBody
+    public ResponseEntity<UserDetailsDto> createUserDetails(@RequestBody
                                             @Valid UserDetailsCreateDto userDetailsCreateDto) {
 
         log.info("createUser: userDetailsCreateDto = {}", userDetailsCreateDto);
 
-        return userDetailsService.createUserDetails(userDetailsCreateDto);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userDetailsService.createUserDetails(userDetailsCreateDto));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
-    public List<UserDetailsDto> readAllUsersDetails() {
-        return userDetailsService.readAllUsersDetails();
+    public ResponseEntity<List<UserDetailsDto>> readAllUsersDetails() {
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userDetailsService.readAllUsersDetails());
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/{userId}")
-    public UserDetailsDto updateUserDetails(@RequestBody
+    public ResponseEntity<UserDetailsDto> updateUserDetails(@RequestBody
                                             @Valid UserDetailsUpdateDto userDetailsUpdateDto,
                                             @PathVariable Integer userId) {
 
         log.info("updateUser: userDetailsUpdateDto = {}, userId = {}", userDetailsUpdateDto, userId);
 
-        return userDetailsService.updateUserDetails(userId, userDetailsUpdateDto);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userDetailsService.updateUserDetails(userId, userDetailsUpdateDto));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{userId}")
-    public void deleteUserDetails(@PathVariable Integer userId) {
+    public ResponseEntity<Void> deleteUserDetails(@PathVariable Integer userId) {
 
         log.info("deleteUser: userId = {}", userId);
 
         userDetailsService.deleteUserDetails(userId);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

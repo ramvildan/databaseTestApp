@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDto> getByLogin(String login) {
+    public Optional<UserDto> getUserByLogin(String login) {
 
         return userDtos.stream()
                 .filter(userDto -> login.equals(userDto.getLogin()))
