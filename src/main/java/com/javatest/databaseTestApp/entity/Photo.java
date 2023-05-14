@@ -14,6 +14,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "photo")
 @Data
@@ -38,4 +40,13 @@ public class Photo {
 
     @OneToOne(fetch = FetchType.EAGER)
     private UserDetails userDetails;
+
+    @Column(name = "uploaded_at")
+    private Date uploadedAt;
+
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+    @Column(name = "is_deleted")
+    private Boolean isDeleted = false;
 }

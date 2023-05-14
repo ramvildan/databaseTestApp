@@ -11,6 +11,10 @@ public interface PhotoService {
 
     PhotoDto uploadPhoto(MultipartFile file) throws IOException;
 
+    PhotoDto updatePhoto(String name, MultipartFile file) throws IOException;
+
+    void deletePhoto(String name);
+
     PhotoDto getPhotoDetailsByName(String name);
 
     byte[] getPhotoByName(String name);

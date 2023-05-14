@@ -29,7 +29,7 @@ public class UserDetailsController {
     private final UserDetailsService userDetailsService;
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<UserDetailsDto> createUserDetails(@RequestBody
                                             @Valid UserDetailsCreateDto userDetailsCreateDto) {
 
@@ -40,7 +40,7 @@ public class UserDetailsController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping
+    @GetMapping("/get/all")
     public ResponseEntity<List<UserDetailsDto>> readAllUsersDetails() {
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -48,7 +48,7 @@ public class UserDetailsController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/{userId}")
+    @PostMapping("/details/update/{userId}")
     public ResponseEntity<UserDetailsDto> updateUserDetails(@RequestBody
                                             @Valid UserDetailsUpdateDto userDetailsUpdateDto,
                                             @PathVariable Integer userId) {
@@ -60,7 +60,7 @@ public class UserDetailsController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/details/delete/{userId}")
     public ResponseEntity<Void> deleteUserDetails(@PathVariable Integer userId) {
 
         log.info("deleteUser: userId = {}", userId);

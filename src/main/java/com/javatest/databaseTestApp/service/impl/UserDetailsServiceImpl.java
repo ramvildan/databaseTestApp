@@ -70,15 +70,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public void deleteUserDetails(Integer userId) {
 
-        UserDetails deletedUserDetails = userDetailsRepository
+        UserDetails userDetailsToDelete = userDetailsRepository
                 .findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
-        deletedUserDetails.setIsDeleted(true);
-        deletedUserDetails.setUpdatedAt(new Date());
+        userDetailsToDelete.setIsDeleted(true);
+        userDetailsToDelete.setUpdatedAt(new Date());
 
         userDetailsConverter.fromUserDetailsToUserDetailsDto(
-                userDetailsRepository.save(deletedUserDetails)
+                userDetailsRepository.save(userDetailsToDelete)
         );
     }
 }
