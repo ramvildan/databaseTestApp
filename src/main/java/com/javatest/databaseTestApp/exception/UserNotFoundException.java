@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class UserNotFoundException extends BadRequestException{
 
     public UserNotFoundException(Integer id) {
-        super(String.format("UserDetails with this Id (%s) does not exist", id));
+        super(String.format("UserDetails with this Id (%s) does not exist or deleted", id));
     }
 
     public UserNotFoundException(String login) {

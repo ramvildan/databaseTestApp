@@ -24,7 +24,7 @@ public class PhotoServiceImpl implements PhotoService {
     private final PhotoRepository photoRepository;
 
     @Override
-    public PhotoDto uploadPhoto(MultipartFile file) throws IOException {
+    public PhotoDto upload(MultipartFile file) throws IOException {
 
         Photo uploadedPhoto = Photo.builder()
                 .name(file.getOriginalFilename())
@@ -40,11 +40,11 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public PhotoDto updatePhoto(String name, MultipartFile file) throws IOException {
+    public PhotoDto update(Integer userDetailsId, MultipartFile file) throws IOException {
 
         Photo photoToUpdate = photoRepository
-                .findByName(name)
-                .orElseThrow(() -> new PhotoNotFoundException(name));
+                .findByUserDetailsIdAndIsDeletedIsFalse(userDetailsId)
+                .orElseThrow(() -> new PhotoNotFoundException(userDetailsId));
 
         photoToUpdate.setName(file.getOriginalFilename());
         photoToUpdate.setType(file.getContentType());
@@ -57,11 +57,11 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public void deletePhoto(String name) {
+    public void delete(Integer userDetailsId) {
 
         Photo photoToDelete = photoRepository
-                .findByName(name)
-                .orElseThrow(() -> new PhotoNotFoundException(name));
+                .findByUserDetailsIdAndIsDeletedIsFalse(userDetailsId)
+                .orElseThrow(() -> new PhotoNotFoundException(userDetailsId));
 
         photoToDelete.setIsDeleted(true);
         photoToDelete.setUpdatedAt(new Date());
@@ -72,22 +72,26 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public PhotoDto getPhotoDetailsByName(String name) {
+    public PhotoDto getPhotoDetailsById(Integer userDetailsId) {
 
-        Optional<Photo> dbPhoto = photoRepository.findByName(name);
+        Photo dbPhoto = photoRepository
+                .findByUserDetailsIdAndIsDeletedIsFalse(userDetailsId)
+                .orElseThrow(() -> new PhotoNotFoundException(userDetailsId));
 
         return PhotoDto.builder()
-                .name(dbPhoto.get().getName())
-                .type(dbPhoto.get().getType())
-                .photo(PhotoUtility.decompressPhoto(dbPhoto.get().getPhoto()))
+                .name(dbPhoto.getName())
+                .type(dbPhoto.getType())
+                .photo(PhotoUtility.decompressPhoto(dbPhoto.getPhoto()))
                 .build();
     }
 
     @Override
-    public byte[] getPhotoByName(String name) {
+    public byte[] getPhotoById(Integer userDetailsId) {
 
-        Optional<Photo> dbPhoto = photoRepository.findByName(name);
+        Photo dbPhoto = photoRepository
+                .findByUserDetailsIdAndIsDeletedIsFalse(userDetailsId)
+                .orElseThrow(() -> new PhotoNotFoundException(userDetailsId));
 
-        return PhotoUtility.decompressPhoto(dbPhoto.get().getPhoto());
+        return PhotoUtility.decompressPhoto(dbPhoto.getPhoto());
     }
 }

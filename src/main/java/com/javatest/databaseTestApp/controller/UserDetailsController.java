@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("users/details")
 @RequiredArgsConstructor
 @Log4j2
 public class UserDetailsController {
@@ -36,19 +37,19 @@ public class UserDetailsController {
         log.info("createUser: userDetailsCreateDto = {}", userDetailsCreateDto);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userDetailsService.createUserDetails(userDetailsCreateDto));
+                .body(userDetailsService.create(userDetailsCreateDto));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/get/all")
-    public ResponseEntity<List<UserDetailsDto>> readAllUsersDetails() {
+    @GetMapping("/users")
+    public ResponseEntity<List<UserDetailsDto>> findAllUsersDetails() {
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userDetailsService.readAllUsersDetails());
+                .body(userDetailsService.readAll());
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/details/update/{userId}")
+    @PutMapping("/update/{userId}")
     public ResponseEntity<UserDetailsDto> updateUserDetails(@RequestBody
                                             @Valid UserDetailsUpdateDto userDetailsUpdateDto,
                                             @PathVariable Integer userId) {
@@ -56,16 +57,16 @@ public class UserDetailsController {
         log.info("updateUser: userDetailsUpdateDto = {}, userId = {}", userDetailsUpdateDto, userId);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userDetailsService.updateUserDetails(userId, userDetailsUpdateDto));
+                .body(userDetailsService.update(userId, userDetailsUpdateDto));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @DeleteMapping("/details/delete/{userId}")
+    @DeleteMapping("/delete/{userId}")
     public ResponseEntity<Void> deleteUserDetails(@PathVariable Integer userId) {
 
         log.info("deleteUser: userId = {}", userId);
 
-        userDetailsService.deleteUserDetails(userId);
+        userDetailsService.delete(userId);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

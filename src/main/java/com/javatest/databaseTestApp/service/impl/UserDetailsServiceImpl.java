@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserDetailsRepository userDetailsRepository;
 
     @Override
-    public UserDetailsDto createUserDetails(UserDetailsCreateDto userDetailsCreateDto) {
+    public UserDetailsDto create(UserDetailsCreateDto userDetailsCreateDto) {
 
         UserDetails newUserDetails = UserDetails.builder()
                 .surname(userDetailsCreateDto.getSurname())
@@ -42,17 +42,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public List<UserDetailsDto> readAllUsersDetails() {
-        return userDetailsRepository.findAll().stream()
+    public List<UserDetailsDto> readAll() {
+        return userDetailsRepository.findAllByIsDeletedIsFalse().stream()
                 .map(userDetailsConverter::fromUserDetailsToUserDetailsDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public UserDetailsDto updateUserDetails(Integer userId, UserDetailsUpdateDto userDetailsUpdateDto) {
+    public UserDetailsDto update(Integer userId, UserDetailsUpdateDto userDetailsUpdateDto) {
 
         UserDetails userDetailsToUpdate = userDetailsRepository
-                .findById(userId)
+                .findByUserIdAndIsDeletedIsFalse(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
         userDetailsToUpdate.setSurname(userDetailsUpdateDto.getSurname());
@@ -68,10 +68,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public void deleteUserDetails(Integer userId) {
+    public void delete(Integer userId) {
 
         UserDetails userDetailsToDelete = userDetailsRepository
-                .findById(userId)
+                .findByUserIdAndIsDeletedIsFalse(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
         userDetailsToDelete.setIsDeleted(true);

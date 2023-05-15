@@ -1,15 +1,14 @@
 package com.javatest.databaseTestApp.service.impl;
 
-import com.javatest.databaseTestApp.converter.UserConverter;
 import com.javatest.databaseTestApp.entity.User;
 import com.javatest.databaseTestApp.exception.UserNotFoundException;
 import com.javatest.databaseTestApp.exception.WrongPasswordException;
 import com.javatest.databaseTestApp.exception.WrongTokenException;
+import com.javatest.databaseTestApp.repository.UserRepository;
 import com.javatest.databaseTestApp.security.dto.JwtProvider;
 import com.javatest.databaseTestApp.security.dto.JwtRequest;
 import com.javatest.databaseTestApp.security.dto.JwtResponse;
 import com.javatest.databaseTestApp.service.AuthService;
-import com.javatest.databaseTestApp.service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,9 +23,7 @@ import static java.util.Objects.isNull;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    private final UserService userService;
-
-    private final UserConverter userConverter;
+    private final UserRepository userRepository;
 
     private final Map<String, String> refreshStorage = new HashMap<>();
 
@@ -37,9 +34,9 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public JwtResponse login(JwtRequest loginRequest) {
 
-        User user = userConverter.fromUserDtoToUser(
-                userService.getUserByLogin(loginRequest.getLogin())
-                .orElseThrow(() -> new UserNotFoundException(loginRequest.getLogin())));
+        User user = userRepository
+                .findByLoginAndIsDeletedIsFalse(loginRequest.getLogin())
+                .orElseThrow(() -> new UserNotFoundException(loginRequest.getLogin()));
 
         if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
 
@@ -64,9 +61,9 @@ public class AuthServiceImpl implements AuthService {
 
             if (!isNull(saveRefreshToken) && saveRefreshToken.equals(refreshToken)) {
 
-                User user = userConverter.fromUserDtoToUser(
-                        userService.getUserByLogin(login)
-                        .orElseThrow(() -> new UserNotFoundException(login)));
+                User user = userRepository
+                        .findByLoginAndIsDeletedIsFalse(login)
+                        .orElseThrow(() -> new UserNotFoundException(login));
 
                 String accessToken = jwtProvider.generateAccessToken(user);
 
@@ -88,9 +85,9 @@ public class AuthServiceImpl implements AuthService {
 
             if (!isNull(saveRefreshToken) && saveRefreshToken.equals(refreshToken)) {
 
-                User user = userConverter.fromUserDtoToUser(
-                        userService.getUserByLogin(login)
-                                .orElseThrow(() -> new UserNotFoundException(login)));
+                User user = userRepository
+                        .findByLoginAndIsDeletedIsFalse(login)
+                        .orElseThrow(() -> new UserNotFoundException(login));
 
                 String newRefreshToken = jwtProvider.generateRefreshToken(user);
 

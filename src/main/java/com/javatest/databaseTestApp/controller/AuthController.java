@@ -27,7 +27,7 @@ public class AuthController {
 
     private final UserService userService;
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest loginRequest) {
 
         JwtResponse token = authService.login(loginRequest);
@@ -36,7 +36,7 @@ public class AuthController {
                 .body(token);
     }
 
-    @PostMapping("token")
+    @PostMapping("/token")
     public ResponseEntity<JwtResponse> getNewAccessToken(@RequestBody RefreshJwtRequest request) {
 
         JwtResponse token = authService.getAccessToken(request.getRefreshToken());
@@ -45,7 +45,7 @@ public class AuthController {
                 .body(token);
     }
 
-    @PostMapping("refresh")
+    @PostMapping("/refresh")
     public ResponseEntity<JwtResponse> getNewRefreshToken(@RequestBody RefreshJwtRequest request) {
 
         JwtResponse token = authService.getRefreshToken(request.getRefreshToken());
@@ -54,15 +54,15 @@ public class AuthController {
                 .body(token);
     }
 
-    @PostMapping("register")
-    public ResponseEntity<UserDto> registrationNewUser(@RequestBody
+    @PostMapping("/register")
+    public ResponseEntity<Void> registrationNewUser(@RequestBody
                                        @Valid UserCreateDto userCreateDto) {
 
         log.info("registrationNewUser: UserCreateDto = {}", userCreateDto);
 
-        UserDto createdUser = userService.createUser(userCreateDto);
+        userService.create(userCreateDto);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(createdUser);
+                .build();
     }
 }

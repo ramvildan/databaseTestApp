@@ -20,7 +20,7 @@ import java.io.IOException;
 
 @Log4j2
 @RestController
-@RequestMapping("/photo")
+@RequestMapping("users/details/photo")
 @RequiredArgsConstructor
 public class PhotoController {
 
@@ -31,48 +31,48 @@ public class PhotoController {
     public ResponseEntity<PhotoDto> uploadPhoto(@RequestParam("photo")MultipartFile file) throws IOException {
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(photoService.uploadPhoto(file));
+                .body(photoService.upload(file));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/update/{name}")
-    public ResponseEntity<PhotoDto> updatePhoto(@PathVariable("name") String photoName,
+    @PostMapping("/update/{userDetailsId}")
+    public ResponseEntity<PhotoDto> updatePhoto(@PathVariable("userDetailsId") Integer userDetailsId,
                                                 @RequestParam("photo")MultipartFile file) throws IOException {
 
-        log.info("updatePhoto: photoName = {}", photoName);
+        log.info("updatePhoto: userDetailsId = {}", userDetailsId);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(photoService.updatePhoto(photoName, file));
+                .body(photoService.update(userDetailsId, file));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @DeleteMapping("/delete/{name}")
-    public ResponseEntity<Void> deletePhoto(@PathVariable("name") String photoName) {
+    @DeleteMapping("/delete/{userDetailsId}")
+    public ResponseEntity<Void> deletePhoto(@PathVariable("userDetailsId") Integer userDetailsId) {
 
-        log.info("deletePhoto: photoName = {}", photoName);
+        log.info("deletePhoto: userDetailsId = {}", userDetailsId);
 
-        photoService.deletePhoto(photoName);
+        photoService.delete(userDetailsId);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/get/photo/info/{name}")
-    public ResponseEntity<PhotoDto> getPhotoDetails(@PathVariable("name") String photoName) {
+    @GetMapping("/get/info/{userDetailsId}")
+    public ResponseEntity<PhotoDto> getPhotoDetails(@PathVariable("userDetailsId") Integer userDetailsId) {
 
-        log.info("getPhotoDetails: photoName = {}", photoName);
+        log.info("getPhotoDetails: userDetailsId = {}", userDetailsId);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(photoService.getPhotoDetailsByName(photoName));
+                .body(photoService.getPhotoDetailsById(userDetailsId));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/get/photo/{name}")
-    public ResponseEntity<byte[]> getPhoto(@PathVariable("name") String photoName) {
+    @GetMapping("/get/{userDetailsId}")
+    public ResponseEntity<byte[]> getPhoto(@PathVariable("userDetailsId") Integer userDetailsId) {
 
-        log.info("getPhoto: photoName = {}", photoName);
+        log.info("getPhoto: userDetailsId = {}", userDetailsId);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(photoService.getPhotoByName(photoName));
+                .body(photoService.getPhotoById(userDetailsId));
     }
 }

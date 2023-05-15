@@ -11,14 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
-    private final List<UserDto> userDtos;
 
     private final UserRepository userRepository;
 
@@ -27,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDto createUser(UserCreateDto userCreateDto) {
+    public UserDto create(UserCreateDto userCreateDto) {
 
         User user = User.builder()
                 .login(userCreateDto.getLogin())
@@ -37,18 +33,8 @@ public class UserServiceImpl implements UserService {
                 .updatedAt(new Date())
                 .build();
 
-        userDtos.add(userConverter.fromUserToUserDto(user));
-
         return userConverter.fromUserToUserDto(
                 userRepository.save(user)
         );
-    }
-
-    @Override
-    public Optional<UserDto> getUserByLogin(String login) {
-
-        return userDtos.stream()
-                .filter(userDto -> login.equals(userDto.getLogin()))
-                .findFirst();
     }
 }

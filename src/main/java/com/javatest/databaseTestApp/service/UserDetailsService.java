@@ -11,12 +11,12 @@ import java.util.List;
 @Service
 public interface UserDetailsService {
 
-    UserDetailsDto createUserDetails(@Valid UserDetailsCreateDto userDetailsCreateDto);
+    UserDetailsDto create(@Valid UserDetailsCreateDto userDetailsCreateDto);
 
-    List<UserDetailsDto> readAllUsersDetails();
+    List<UserDetailsDto> readAll();
 
-    UserDetailsDto updateUserDetails(Integer userId,
-                                     @Valid UserDetailsUpdateDto userDetailsUpdateDto);
+    UserDetailsDto update(Integer userId,
+                          @Valid UserDetailsUpdateDto userDetailsUpdateDto);
 
-    void deleteUserDetails(Integer userId);
+    void delete(Integer userId);
 }
