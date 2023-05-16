@@ -55,10 +55,10 @@ public class UserContactServiceImpl implements UserContactService {
                 .findByIdAndIsDeletedIsFalse(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
-        userContactToUpdate.setSurname(userContactToUpdate.getSurname());
-        userContactToUpdate.setName(userContactToUpdate.getName());
-        userContactToUpdate.setPatronymic(userContactToUpdate.getPatronymic());
-        userContactToUpdate.setPhoneNumber(userContactToUpdate.getPhoneNumber());
+        userContactToUpdate.setSurname(userContactUpdateDto.getSurname());
+        userContactToUpdate.setName(userContactUpdateDto.getName());
+        userContactToUpdate.setPatronymic(userContactUpdateDto.getPatronymic());
+        userContactToUpdate.setPhoneNumber(userContactUpdateDto.getPhoneNumber());
         userContactToUpdate.setUpdatedAt(new Date());
 
         return userContactConverter.fromUserDetailsToUserContactDto(
