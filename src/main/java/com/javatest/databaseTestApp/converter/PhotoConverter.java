@@ -2,6 +2,7 @@ package com.javatest.databaseTestApp.converter;
 
 import com.javatest.databaseTestApp.dto.PhotoDto;
 import com.javatest.databaseTestApp.entity.Photo;
+import com.javatest.databaseTestApp.util.PhotoUtility;
 import org.springframework.stereotype.Component;
 
 import static java.util.Objects.isNull;
@@ -18,7 +19,7 @@ public class PhotoConverter {
         return PhotoDto.builder()
                 .name(photo.getName())
                 .type(photo.getType())
-                .photo(photo.getPhoto())
+                .photo(PhotoUtility.decompressPhoto(photo.getPhoto()))
                 .build();
     }
 }

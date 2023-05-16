@@ -40,7 +40,7 @@ public class UserDetails {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "userDetails", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "userDetails", fetch = FetchType.LAZY)
     private Photo photo;
 
     @Column(name = "created_at")

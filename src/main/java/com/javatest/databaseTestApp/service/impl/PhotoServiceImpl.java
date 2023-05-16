@@ -4,7 +4,9 @@ import com.javatest.databaseTestApp.converter.PhotoConverter;
 import com.javatest.databaseTestApp.dto.PhotoDto;
 import com.javatest.databaseTestApp.entity.Photo;
 import com.javatest.databaseTestApp.exception.PhotoNotFoundException;
+import com.javatest.databaseTestApp.exception.UserDetailsNotFoundException;
 import com.javatest.databaseTestApp.repository.PhotoRepository;
+import com.javatest.databaseTestApp.repository.UserDetailsRepository;
 import com.javatest.databaseTestApp.service.PhotoService;
 import com.javatest.databaseTestApp.util.PhotoUtility;
 import lombok.RequiredArgsConstructor;
@@ -18,17 +20,21 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class PhotoServiceImpl implements PhotoService {
 
+    private final UserDetailsRepository userDetailsRepository;
+
     private final PhotoConverter photoConverter;
 
     private final PhotoRepository photoRepository;
 
     @Override
-    public PhotoDto upload(MultipartFile file) throws IOException {
+    public PhotoDto upload(Integer userDetailsId, MultipartFile file) throws IOException {
 
         Photo uploadedPhoto = Photo.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
                 .photo(PhotoUtility.compressPhoto(file.getBytes()))
+                .userDetails(userDetailsRepository.findById(userDetailsId)
+                        .orElseThrow(() -> new UserDetailsNotFoundException(userDetailsId)))
                 .uploadedAt(new Date())
                 .updatedAt(new Date())
                 .isDeleted(false)
@@ -43,8 +49,8 @@ public class PhotoServiceImpl implements PhotoService {
     public PhotoDto update(Integer userDetailsId, MultipartFile file) throws IOException {
 
         Photo photoToUpdate = photoRepository
-                .findByUserDetailsIdAndIsDeletedIsFalse(userDetailsId)
-                .orElseThrow(() -> new PhotoNotFoundException(userDetailsId));
+                .findById(userDetailsId)
+                .orElseThrow(() -> new UserDetailsNotFoundException(userDetailsId));
 
         photoToUpdate.setName(file.getOriginalFilename());
         photoToUpdate.setType(file.getContentType());

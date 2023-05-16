@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,17 +28,18 @@ public class PhotoController {
     private final PhotoService photoService;
 
 //    @PreAuthorize("hasAuthority('APP_USER')")
-    @PostMapping("/create")
-    public ResponseEntity<PhotoDto> upload(@RequestParam("photo")MultipartFile file) throws IOException {
+    @PostMapping("/create/{userDetailsId}")
+    public ResponseEntity<PhotoDto> upload(@PathVariable("userDetailsId") Integer userDetailsId,
+                                           @RequestParam("photo") MultipartFile file) throws IOException {
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(photoService.upload(file));
+                .body(photoService.upload(userDetailsId, file));
     }
 
 //    @PreAuthorize("hasAuthority('APP_USER')")
-    @PostMapping("/update/{userDetailsId}")
+    @PutMapping("/update/{userDetailsId}")
     public ResponseEntity<PhotoDto> update(@PathVariable("userDetailsId") Integer userDetailsId,
-                                                @RequestParam("photo")MultipartFile file) throws IOException {
+                                                @RequestParam("photo") MultipartFile file) throws IOException {
 
         log.info("updatePhoto: userDetailsId = {}", userDetailsId);
 

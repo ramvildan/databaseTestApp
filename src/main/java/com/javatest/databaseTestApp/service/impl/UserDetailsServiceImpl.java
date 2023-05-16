@@ -5,6 +5,7 @@ import com.javatest.databaseTestApp.dto.UserDetailsCreateDto;
 import com.javatest.databaseTestApp.dto.UserDetailsDto;
 import com.javatest.databaseTestApp.dto.UserDetailsUpdateDto;
 import com.javatest.databaseTestApp.entity.UserDetails;
+import com.javatest.databaseTestApp.exception.UserDetailsNotFoundException;
 import com.javatest.databaseTestApp.exception.UserNotFoundException;
 import com.javatest.databaseTestApp.repository.UserDetailsRepository;
 import com.javatest.databaseTestApp.service.UserDetailsService;
@@ -51,11 +52,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetailsDto update(Integer userId, UserDetailsUpdateDto userDetailsUpdateDto) {
+    public UserDetailsDto update(Integer userDetailsId, UserDetailsUpdateDto userDetailsUpdateDto) {
 
         UserDetails userDetailsToUpdate = userDetailsRepository
-                .findByIdAndIsDeletedIsFalse(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
+                .findByIdAndIsDeletedIsFalse(userDetailsId)
+                .orElseThrow(() -> new UserDetailsNotFoundException(userDetailsId));
 
         userDetailsToUpdate.setSurname(userDetailsUpdateDto.getSurname());
         userDetailsToUpdate.setName(userDetailsUpdateDto.getName());
@@ -70,11 +71,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public void delete(Integer userId) {
+    public void delete(Integer userDetailsId) {
 
         UserDetails userDetailsToDelete = userDetailsRepository
-                .findByIdAndIsDeletedIsFalse(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
+                .findByIdAndIsDeletedIsFalse(userDetailsId)
+                .orElseThrow(() -> new UserDetailsNotFoundException(userDetailsId));
 
         userDetailsToDelete.setIsDeleted(true);
         userDetailsToDelete.setUpdatedAt(new Date());

@@ -36,7 +36,7 @@ public class Photo {
     @Column(name = "type")
     private String type;
 
-    @Column(name = "photo", nullable = false, length = 100000)
+    @Column(name = "photo")
     private byte[] photo;
 
     @OneToOne(fetch = FetchType.EAGER)
