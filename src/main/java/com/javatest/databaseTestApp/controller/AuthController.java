@@ -55,7 +55,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> registrationNewUser(@RequestBody
-                                       @Valid UserCreateDto userCreateDto) {
+                                                    @Valid UserCreateDto userCreateDto) {
 
         log.info("registrationNewUser: UserCreateDto = {}", userCreateDto);
 

@@ -11,7 +11,7 @@ public class UserInfoConverter {
 
     public UserInfoDto fromUserInfoToUserInfoDto(UserInfo userInfo) {
 
-        if(isNull(userInfo)) {
+        if (isNull(userInfo)) {
             return null;
         }
 

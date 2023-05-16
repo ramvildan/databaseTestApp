@@ -12,11 +12,12 @@ public class PhotoConverter {
 
     public PhotoDto fromPhotoToPhotoDto(Photo photo) {
 
-        if(isNull(photo)) {
+        if (isNull(photo)) {
             return null;
         }
 
         return PhotoDto.builder()
+                .id(photo.getId())
                 .name(photo.getName())
                 .type(photo.getType())
                 .photo(PhotoUtility.decompressPhoto(photo.getPhoto()))

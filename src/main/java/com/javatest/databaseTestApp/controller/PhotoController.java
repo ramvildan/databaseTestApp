@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +26,6 @@ public class PhotoController {
 
     private final PhotoService photoService;
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping("/create/{userInfoId}")
     public ResponseEntity<PhotoDto> upload(@PathVariable("userInfoId") Integer userInfoId,
                                            @RequestParam("photo") MultipartFile file) throws IOException {
@@ -36,10 +34,9 @@ public class PhotoController {
                 .body(photoService.upload(userInfoId, file));
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PutMapping("/update/{userInfoId}")
     public ResponseEntity<PhotoDto> update(@PathVariable("userInfoId") Integer userInfoId,
-                                                @RequestParam("photo") MultipartFile file) throws IOException {
+                                           @RequestParam("photo") MultipartFile file) throws IOException {
 
         log.info("updatePhoto: userInfoId = {}", userInfoId);
 
@@ -47,7 +44,6 @@ public class PhotoController {
                 .body(photoService.update(userInfoId, file));
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @DeleteMapping("/delete/{userInfoId}")
     public ResponseEntity<Void> delete(@PathVariable("userInfoId") Integer userInfoId) {
 
@@ -58,7 +54,6 @@ public class PhotoController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/get/info/{userInfoId}")
     public ResponseEntity<PhotoDto> getDetails(@PathVariable("userInfoId") Integer userInfoId) {
 
@@ -68,7 +63,6 @@ public class PhotoController {
                 .body(photoService.getPhotoDetailsById(userInfoId));
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/get/{userDetailsId}")
     public ResponseEntity<byte[]> getPhoto(@PathVariable("userDetailsId") Integer userDetailsId) {
 

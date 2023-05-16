@@ -11,7 +11,7 @@ public class UserContactConverter {
 
     public UserContactDto fromUserDetailsToUserContactDto(UserInfo userInfo) {
 
-        if(isNull(userInfo)) {
+        if (isNull(userInfo)) {
             return null;
         }
 

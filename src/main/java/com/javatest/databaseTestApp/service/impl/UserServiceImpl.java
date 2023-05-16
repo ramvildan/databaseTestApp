@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService {
         User user = User.builder()
                 .login(userCreateDto.getLogin())
                 .password(passwordEncoder.encode(userCreateDto.getPassword()))
-                .role(userCreateDto.getRole())
                 .createdAt(new Date())
                 .updatedAt(new Date())
                 .isDeleted(false)

@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +27,6 @@ public class UserInfoController {
 
     private final UserInfoService userInfoService;
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping("/create")
     public ResponseEntity<UserInfoDto> create(@RequestBody UserInfoCreateDto userInfoCreateDto) {
 
@@ -38,7 +36,6 @@ public class UserInfoController {
                 .body(userInfoService.create(userInfoCreateDto));
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping
     public ResponseEntity<List<UserInfoDto>> findAll() {
 
@@ -46,7 +43,6 @@ public class UserInfoController {
                 .body(userInfoService.readAll());
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PutMapping("/{userInfoId}")
     public ResponseEntity<UserInfoDto> update(@RequestBody UserInfoUpdateDto userInfoUpdateDto,
                                               @PathVariable Integer userInfoId) {
@@ -57,7 +53,6 @@ public class UserInfoController {
                 .body(userInfoService.update(userInfoId, userInfoUpdateDto));
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @DeleteMapping("/{userInfoId}")
     public ResponseEntity<Void> delete(@PathVariable Integer userInfoId) {
 

@@ -24,7 +24,7 @@ public class UserInfoUpdateDto {
     @NotBlank
     private String patronymic;
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @NotEmpty
     private LocalDate birthday;
 

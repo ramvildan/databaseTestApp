@@ -15,7 +15,7 @@ public class PhotoUtility {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
 
-        byte[] tmp = new byte[4*1024];
+        byte[] tmp = new byte[4 * 1024];
 
         while (!deflater.finished()) {
             int size = deflater.deflate(tmp);
@@ -39,7 +39,7 @@ public class PhotoUtility {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
 
-        byte[] tmp = new byte[4*1024];
+        byte[] tmp = new byte[4 * 1024];
 
         try {
 

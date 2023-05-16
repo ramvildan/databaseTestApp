@@ -85,6 +85,7 @@ public class PhotoServiceImpl implements PhotoService {
                 .orElseThrow(() -> new PhotoNotFoundException(userInfoId));
 
         return PhotoDto.builder()
+                .id(dbPhoto.getId())
                 .name(dbPhoto.getName())
                 .type(dbPhoto.getType())
                 .photo(PhotoUtility.decompressPhoto(dbPhoto.getPhoto()))
