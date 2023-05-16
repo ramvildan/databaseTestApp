@@ -25,7 +25,7 @@ import static java.util.Objects.isNull;
 @RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
 
-    private static final String AUTHORISATION = "Authorisation";
+    private static final String AUTHORISATION = "authorisation";
 
     private final JwtProvider jwtProvider;
 
@@ -35,8 +35,9 @@ public class JwtFilter extends GenericFilterBean {
 
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
 
+        log.info(token);
         if (!isNull(token) && jwtProvider.validateAccessToken(token)) {
-
+            log.info("token valid");
             Claims claims = jwtProvider.getAccessClaims(token);
             JwtAuthentication jwtInfoToken = JwtUtils.generate(claims);
             jwtInfoToken.setAuthenticated(true);
@@ -49,8 +50,8 @@ public class JwtFilter extends GenericFilterBean {
 
     private String getTokenFromRequest(HttpServletRequest request) {
 
-        final String bearer = request.getHeader(AUTHORISATION);
-
+        String bearer = request.getHeader(AUTHORISATION);
+        log.info(bearer);
         if (StringUtils.hasText(bearer) && bearer.startsWith("Bearer ")) {
 
             return bearer.substring(7);

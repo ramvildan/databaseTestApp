@@ -30,6 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .surname(userDetailsCreateDto.getSurname())
                 .name(userDetailsCreateDto.getName())
                 .patronymic(userDetailsCreateDto.getPatronymic())
+                .birthday(userDetailsCreateDto.getBirthday())
                 .email(userDetailsCreateDto.getEmail())
                 .phoneNumber(userDetailsCreateDto.getPhoneNumber())
                 .createdAt(new Date())

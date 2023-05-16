@@ -31,10 +31,10 @@ public class UserDetails {
     @Column(name = "patronymic", nullable = false)
     private String patronymic;
 
-    @Column(name = "birthday", nullable = false)
-    private Date birthday;
+    @Column(name = "birthday")
+    private String birthday;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "phone_number", nullable = false)

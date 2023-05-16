@@ -2,8 +2,6 @@ package com.javatest.databaseTestApp.dto;
 
 import lombok.Builder;
 
-import java.util.Date;
-
 @Builder
 public class UserDetailsDto {
 
@@ -11,7 +9,7 @@ public class UserDetailsDto {
     private String surname;
     private String name;
     private String patronymic;
-    private Date birthday;
+    private String birthday;
     private String phoneNumber;
     private String email;
 }

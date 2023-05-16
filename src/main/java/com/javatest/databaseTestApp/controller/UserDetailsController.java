@@ -29,9 +29,9 @@ public class UserDetailsController {
 
     private final UserDetailsService userDetailsService;
 
-    @PreAuthorize("hasAuthority('APP_USER')")
+//    @PreAuthorize("hasAuthority('APP_USER')")
     @PostMapping("/create")
-    public ResponseEntity<UserDetailsDto> create(@RequestBody @Valid UserDetailsCreateDto userDetailsCreateDto) {
+    public ResponseEntity<UserDetailsDto> create(@RequestBody UserDetailsCreateDto userDetailsCreateDto) {
 
         log.info("createUser: userDetailsCreateDto = {}", userDetailsCreateDto);
 
@@ -39,7 +39,7 @@ public class UserDetailsController {
                 .body(userDetailsService.create(userDetailsCreateDto));
     }
 
-    @PreAuthorize("hasAuthority('APP_USER')")
+//    @PreAuthorize("hasAuthority('APP_USER')")
     @GetMapping
     public ResponseEntity<List<UserDetailsDto>> findAll() {
 
@@ -47,10 +47,9 @@ public class UserDetailsController {
                 .body(userDetailsService.readAll());
     }
 
-    @PreAuthorize("hasAuthority('APP_USER')")
+//    @PreAuthorize("hasAuthority('APP_USER')")
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDetailsDto> update(@RequestBody
-                                            @Valid UserDetailsUpdateDto userDetailsUpdateDto,
+    public ResponseEntity<UserDetailsDto> update(@RequestBody UserDetailsUpdateDto userDetailsUpdateDto,
                                             @PathVariable Integer userId) {
 
         log.info("updateUser: userDetailsUpdateDto = {}, userId = {}", userDetailsUpdateDto, userId);
@@ -59,7 +58,7 @@ public class UserDetailsController {
                 .body(userDetailsService.update(userId, userDetailsUpdateDto));
     }
 
-    @PreAuthorize("hasAuthority('APP_USER')")
+//    @PreAuthorize("hasAuthority('APP_USER')")
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> delete(@PathVariable Integer userId) {
 

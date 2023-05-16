@@ -24,15 +24,13 @@ public class UserDetailsCreateDto {
     @NotBlank
     private String patronymic;
 
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
-    @NotEmpty
-    private Date birthday;
+    @Size(min = 1, max = 255)
+    private String birthday;
 
     @Size(min = 1, max = 255)
     @NotBlank
     private String phoneNumber;
 
-    @Email(message = "Email wrong format")
-    @NotBlank
+    @Size(min = 1, max = 255)
     private String email;
 }

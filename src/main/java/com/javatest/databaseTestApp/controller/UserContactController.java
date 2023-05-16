@@ -29,9 +29,9 @@ public class UserContactController {
 
     private final UserContactService userContactService;
 
-    @PreAuthorize("hasAuthority('APP_USER')")
+//    @PreAuthorize("hasAuthority('APP_USER')")
     @PostMapping("/create/{userId}")
-    public ResponseEntity<UserContactDto> create(@RequestBody @Valid UserContactCreateDto userContactCreateDto,
+    public ResponseEntity<UserContactDto> create(@RequestBody UserContactCreateDto userContactCreateDto,
                                                  @PathVariable Integer userId) {
 
         log.info("createContact: userDetailsCreateDto = {}", userContactCreateDto);
@@ -40,7 +40,7 @@ public class UserContactController {
                 .body(userContactService.create(userId, userContactCreateDto));
     }
 
-    @PreAuthorize("hasAuthority('APP_USER')")
+//    @PreAuthorize("hasAuthority('APP_USER')")
     @GetMapping
     public ResponseEntity<List<UserContactDto>> readAll() {
 
@@ -48,9 +48,9 @@ public class UserContactController {
                 .body(userContactService.readAll());
     }
 
-    @PreAuthorize("hasAuthority('APP_USER')")
+//    @PreAuthorize("hasAuthority('APP_USER')")
     @PutMapping("/{userId}")
-    public ResponseEntity<UserContactDto> update(@RequestBody @Valid UserContactUpdateDto userContactUpdateDto,
+    public ResponseEntity<UserContactDto> update(@RequestBody UserContactUpdateDto userContactUpdateDto,
                                                  @PathVariable Integer userId) {
 
         log.info("updateContact: userContactUpdateDto = {}, userId = {}", userContactUpdateDto, userId);
@@ -59,7 +59,7 @@ public class UserContactController {
                 .body(userContactService.update(userId, userContactUpdateDto));
     }
 
-    @PreAuthorize("hasAuthority('APP_USER')")
+//    @PreAuthorize("hasAuthority('APP_USER')")
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> delete(@PathVariable Integer userId) {
 
