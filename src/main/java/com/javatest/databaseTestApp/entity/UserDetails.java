@@ -1,6 +1,7 @@
 package com.javatest.databaseTestApp.entity;
 
 import jakarta.persistence.*;
+import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -52,5 +53,5 @@ public class UserDetails {
     private Date updatedAt;
 
     @Column(name = "is_deleted")
-    private Boolean isDeleted = false;
+    private Boolean isDeleted;
 }

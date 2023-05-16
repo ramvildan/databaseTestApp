@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static java.util.Objects.isNull;
@@ -59,7 +60,7 @@ public class AuthServiceImpl implements AuthService {
             String login = claims.getSubject();
             String saveRefreshToken = refreshStorage.get(login);
 
-            if (!isNull(saveRefreshToken) && saveRefreshToken.equals(refreshToken)) {
+            if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
 
                 User user = userRepository
                         .findByLoginAndIsDeletedIsFalse(login)
@@ -83,12 +84,13 @@ public class AuthServiceImpl implements AuthService {
             String login = claims.getSubject();
             String saveRefreshToken = refreshStorage.get(login);
 
-            if (!isNull(saveRefreshToken) && saveRefreshToken.equals(refreshToken)) {
+            if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
 
                 User user = userRepository
                         .findByLoginAndIsDeletedIsFalse(login)
                         .orElseThrow(() -> new UserNotFoundException(login));
 
+                String accessToken = jwtProvider.generateAccessToken(user);
                 String newRefreshToken = jwtProvider.generateRefreshToken(user);
 
                 return new JwtResponse(null, newRefreshToken);

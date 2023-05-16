@@ -2,7 +2,7 @@ package com.javatest.databaseTestApp.entity;
 
 import com.javatest.databaseTestApp.entity.type.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,12 +23,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty
-    @Column(name = "login")
+    @Column(name = "login", nullable = false)
     private String login;
 
-    @NotEmpty
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -41,5 +39,5 @@ public class User {
     private Date updatedAt;
 
     @Column(name = "is_deleted")
-    private Boolean isDeleted = false;
+    private Boolean isDeleted;
 }

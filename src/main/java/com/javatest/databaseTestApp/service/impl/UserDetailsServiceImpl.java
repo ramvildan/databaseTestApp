@@ -34,6 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .phoneNumber(userDetailsCreateDto.getPhoneNumber())
                 .createdAt(new Date())
                 .updatedAt(new Date())
+                .isDeleted(false)
                 .build();
 
         return userDetailsConverter.fromUserDetailsToUserDetailsDto(

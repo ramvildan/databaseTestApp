@@ -1,7 +1,6 @@
 package com.javatest.databaseTestApp.controller;
 
 import com.javatest.databaseTestApp.dto.UserCreateDto;
-import com.javatest.databaseTestApp.dto.UserDto;
 import com.javatest.databaseTestApp.security.dto.JwtRequest;
 import com.javatest.databaseTestApp.security.dto.JwtResponse;
 import com.javatest.databaseTestApp.security.dto.RefreshJwtRequest;

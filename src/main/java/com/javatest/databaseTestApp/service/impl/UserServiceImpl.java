@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
                 .role(userCreateDto.getRole())
                 .createdAt(new Date())
                 .updatedAt(new Date())
+                .isDeleted(false)
                 .build();
 
         return userConverter.fromUserToUserDto(

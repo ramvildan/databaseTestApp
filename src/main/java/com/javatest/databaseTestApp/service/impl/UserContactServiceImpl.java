@@ -36,6 +36,7 @@ public class UserContactServiceImpl implements UserContactService {
                     .phoneNumber(userContactCreateDto.getPhoneNumber())
                     .createdAt(new Date())
                     .updatedAt(new Date())
+                    .isDeleted(false)
                     .build();
 
             return userContactConverter.fromUserDetailsToUserContactDto(

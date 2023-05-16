@@ -28,7 +28,7 @@ public class PhotoController {
 
     @PreAuthorize("hasAuthority('APP_USER')")
     @PostMapping("/create")
-    public ResponseEntity<PhotoDto> uploadPhoto(@RequestParam("photo")MultipartFile file) throws IOException {
+    public ResponseEntity<PhotoDto> upload(@RequestParam("photo")MultipartFile file) throws IOException {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(photoService.upload(file));
@@ -36,7 +36,7 @@ public class PhotoController {
 
     @PreAuthorize("hasAuthority('APP_USER')")
     @PostMapping("/update/{userDetailsId}")
-    public ResponseEntity<PhotoDto> updatePhoto(@PathVariable("userDetailsId") Integer userDetailsId,
+    public ResponseEntity<PhotoDto> update(@PathVariable("userDetailsId") Integer userDetailsId,
                                                 @RequestParam("photo")MultipartFile file) throws IOException {
 
         log.info("updatePhoto: userDetailsId = {}", userDetailsId);
@@ -47,7 +47,7 @@ public class PhotoController {
 
     @PreAuthorize("hasAuthority('APP_USER')")
     @DeleteMapping("/delete/{userDetailsId}")
-    public ResponseEntity<Void> deletePhoto(@PathVariable("userDetailsId") Integer userDetailsId) {
+    public ResponseEntity<Void> delete(@PathVariable("userDetailsId") Integer userDetailsId) {
 
         log.info("deletePhoto: userDetailsId = {}", userDetailsId);
 
@@ -58,7 +58,7 @@ public class PhotoController {
 
     @PreAuthorize("hasAuthority('APP_USER')")
     @GetMapping("/get/info/{userDetailsId}")
-    public ResponseEntity<PhotoDto> getPhotoDetails(@PathVariable("userDetailsId") Integer userDetailsId) {
+    public ResponseEntity<PhotoDto> getDetails(@PathVariable("userDetailsId") Integer userDetailsId) {
 
         log.info("getPhotoDetails: userDetailsId = {}", userDetailsId);
 

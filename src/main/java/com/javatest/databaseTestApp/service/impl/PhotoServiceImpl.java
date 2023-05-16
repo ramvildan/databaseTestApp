@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +31,7 @@ public class PhotoServiceImpl implements PhotoService {
                 .photo(PhotoUtility.compressPhoto(file.getBytes()))
                 .uploadedAt(new Date())
                 .updatedAt(new Date())
+                .isDeleted(false)
                 .build();
 
         return photoConverter.fromPhotoToPhotoDto(
