@@ -5,7 +5,6 @@ import com.javatest.databaseTestApp.dto.UserContactCreateDto;
 import com.javatest.databaseTestApp.dto.UserContactDto;
 import com.javatest.databaseTestApp.dto.UserContactUpdateDto;
 import com.javatest.databaseTestApp.entity.UserDetails;
-import com.javatest.databaseTestApp.exception.AlreadyExistsException;
 import com.javatest.databaseTestApp.exception.UserNotFoundException;
 import com.javatest.databaseTestApp.repository.UserDetailsRepository;
 import com.javatest.databaseTestApp.service.UserContactService;
@@ -27,24 +26,19 @@ public class UserContactServiceImpl implements UserContactService {
     @Override
     public UserContactDto create(Integer userId, UserContactCreateDto userContactCreateDto) {
 
-        if(userDetailsRepository.findByUserIdAndIsDeletedIsFalse(userId).isEmpty()) {
+        UserDetails newUserContact = UserDetails.builder()
+                .surname(userContactCreateDto.getSurname())
+                .name(userContactCreateDto.getName())
+                .patronymic(userContactCreateDto.getPatronymic())
+                .phoneNumber(userContactCreateDto.getPhoneNumber())
+                .createdAt(new Date())
+                .updatedAt(new Date())
+                .isDeleted(false)
+                .build();
 
-            UserDetails newUserContact = UserDetails.builder()
-                    .surname(userContactCreateDto.getSurname())
-                    .name(userContactCreateDto.getName())
-                    .patronymic(userContactCreateDto.getPatronymic())
-                    .phoneNumber(userContactCreateDto.getPhoneNumber())
-                    .createdAt(new Date())
-                    .updatedAt(new Date())
-                    .isDeleted(false)
-                    .build();
-
-            return userContactConverter.fromUserDetailsToUserContactDto(
-                    userDetailsRepository.save(newUserContact)
-            );
-        }
-
-        throw new AlreadyExistsException("This user already exists");
+        return userContactConverter.fromUserDetailsToUserContactDto(
+                userDetailsRepository.save(newUserContact)
+        );
     }
 
     @Override
@@ -58,7 +52,7 @@ public class UserContactServiceImpl implements UserContactService {
     public UserContactDto update(Integer userId, UserContactUpdateDto userContactUpdateDto) {
 
         UserDetails userContactToUpdate = userDetailsRepository
-                .findByUserIdAndIsDeletedIsFalse(userId)
+                .findByIdAndIsDeletedIsFalse(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
         userContactToUpdate.setSurname(userContactToUpdate.getSurname());
@@ -76,7 +70,7 @@ public class UserContactServiceImpl implements UserContactService {
     public void delete(Integer userId) {
 
         UserDetails userContactToDelete = userDetailsRepository
-                .findByUserIdAndIsDeletedIsFalse(userId)
+                .findByIdAndIsDeletedIsFalse(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
         userContactToDelete.setIsDeleted(true);

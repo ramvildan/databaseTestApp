@@ -54,7 +54,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetailsDto update(Integer userId, UserDetailsUpdateDto userDetailsUpdateDto) {
 
         UserDetails userDetailsToUpdate = userDetailsRepository
-                .findByUserIdAndIsDeletedIsFalse(userId)
+                .findByIdAndIsDeletedIsFalse(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
         userDetailsToUpdate.setSurname(userDetailsUpdateDto.getSurname());
@@ -73,7 +73,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public void delete(Integer userId) {
 
         UserDetails userDetailsToDelete = userDetailsRepository
-                .findByUserIdAndIsDeletedIsFalse(userId)
+                .findByIdAndIsDeletedIsFalse(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
         userDetailsToDelete.setIsDeleted(true);

@@ -40,9 +40,6 @@ public class UserDetails {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private User user;
-
     @OneToOne(mappedBy = "userDetails", fetch = FetchType.EAGER)
     private Photo photo;
 

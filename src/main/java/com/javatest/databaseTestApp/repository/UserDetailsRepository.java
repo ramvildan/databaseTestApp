@@ -12,5 +12,5 @@ public interface UserDetailsRepository extends JpaRepository<UserDetails, Intege
 
     List<UserDetails> findAllByIsDeletedIsFalse();
 
-    Optional<UserDetails> findByUserIdAndIsDeletedIsFalse(Integer userId);
+    Optional<UserDetails> findByIdAndIsDeletedIsFalse(Integer userDetailsId);
 }
