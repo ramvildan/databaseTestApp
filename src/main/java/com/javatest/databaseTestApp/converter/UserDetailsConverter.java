@@ -20,6 +20,7 @@ public class UserDetailsConverter {
                 .surname(userDetails.getSurname())
                 .name(userDetails.getName())
                 .patronymic(userDetails.getPatronymic())
+                .birthday(userDetails.getBirthday())
                 .email(userDetails.getEmail())
                 .phoneNumber(userDetails.getPhoneNumber())
                 .build();

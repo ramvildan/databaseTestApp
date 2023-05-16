@@ -1,5 +1,6 @@
 package com.javatest.databaseTestApp.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -24,13 +26,15 @@ public class UserDetailsUpdateDto {
     @NotBlank
     private String patronymic;
 
-    @Size(min = 1, max = 255)
-    private String birthday;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    @NotEmpty
+    private LocalDate birthday;
 
     @Size(min = 1, max = 255)
     @NotBlank
     private String phoneNumber;
 
-    @Size(min = 1, max = 255)
+    @Email(message = "Email wrong format")
+    @NotBlank
     private String email;
 }

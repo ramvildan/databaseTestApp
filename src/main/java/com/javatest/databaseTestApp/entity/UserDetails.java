@@ -1,12 +1,12 @@
 package com.javatest.databaseTestApp.entity;
 
 import jakarta.persistence.*;
-import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -32,7 +32,7 @@ public class UserDetails {
     private String patronymic;
 
     @Column(name = "birthday")
-    private String birthday;
+    private LocalDate birthday;
 
     @Column(name = "email")
     private String email;
