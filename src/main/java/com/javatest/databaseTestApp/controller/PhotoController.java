@@ -26,7 +26,7 @@ public class PhotoController {
 
     private final PhotoService photoService;
 
-    @PostMapping("/create/{userInfoId}")
+    @PostMapping("/{userInfoId}")
     public ResponseEntity<PhotoDto> upload(@PathVariable("userInfoId") Integer userInfoId,
                                            @RequestParam("photo") MultipartFile file) throws IOException {
 
@@ -34,7 +34,7 @@ public class PhotoController {
                 .body(photoService.upload(userInfoId, file));
     }
 
-    @PutMapping("/update/{userInfoId}")
+    @PutMapping("/{userInfoId}")
     public ResponseEntity<PhotoDto> update(@PathVariable("userInfoId") Integer userInfoId,
                                            @RequestParam("photo") MultipartFile file) throws IOException {
 
@@ -44,7 +44,7 @@ public class PhotoController {
                 .body(photoService.update(userInfoId, file));
     }
 
-    @DeleteMapping("/delete/{userInfoId}")
+    @DeleteMapping("/{userInfoId}")
     public ResponseEntity<Void> delete(@PathVariable("userInfoId") Integer userInfoId) {
 
         log.info("deletePhoto: userInfoId = {}", userInfoId);
@@ -54,7 +54,7 @@ public class PhotoController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("/get/info/{userInfoId}")
+    @GetMapping("/{userInfoId}")
     public ResponseEntity<PhotoDto> getDetails(@PathVariable("userInfoId") Integer userInfoId) {
 
         log.info("getPhotoDetails: userInfoId = {}", userInfoId);

@@ -15,6 +15,8 @@ public interface UserInfoService {
 
     List<UserInfoDto> readAll();
 
+    UserInfoDto getById(Integer userInfoId);
+
     UserInfoDto update(Integer userInfoId,
                        @Valid UserInfoUpdateDto userInfoUpdateDto);
 

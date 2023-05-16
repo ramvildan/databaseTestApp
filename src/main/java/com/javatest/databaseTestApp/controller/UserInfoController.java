@@ -27,7 +27,7 @@ public class UserInfoController {
 
     private final UserInfoService userInfoService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<UserInfoDto> create(@RequestBody UserInfoCreateDto userInfoCreateDto) {
 
         log.info("createInfo: userInfoCreateDto = {}", userInfoCreateDto);
@@ -41,6 +41,13 @@ public class UserInfoController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(userInfoService.readAll());
+    }
+
+    @GetMapping("/{userInfoId}")
+    public ResponseEntity<UserInfoDto> get(@PathVariable Integer userInfoId) {
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userInfoService.getById(userInfoId));
     }
 
     @PutMapping("/{userInfoId}")

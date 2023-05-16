@@ -51,6 +51,13 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    public UserInfoDto getById(Integer userInfoId) {
+        return userInfoConverter.fromUserInfoToUserInfoDto(
+                userInfoRepository.findByIdAndIsDeletedIsFalse(userInfoId)
+                        .orElseThrow(() -> new UserInfoNotFoundException(userInfoId)));
+    }
+
+    @Override
     public UserInfoDto update(Integer userInfoId, UserInfoUpdateDto userInfoUpdateDto) {
 
         UserInfo userInfoToUpdate = userInfoRepository

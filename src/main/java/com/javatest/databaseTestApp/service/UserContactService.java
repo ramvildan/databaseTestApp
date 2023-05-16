@@ -15,8 +15,10 @@ public interface UserContactService {
 
     List<UserContactDto> readAll();
 
-    UserContactDto update(Integer userId,
+    UserContactDto getById(Integer userInfoId);
+
+    UserContactDto update(Integer userInfoId,
                           @Valid UserContactUpdateDto userContactUpdateDto);
 
-    void delete(Integer userId);
+    void delete(Integer userInfoId);
 }

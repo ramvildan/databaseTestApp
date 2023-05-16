@@ -3,6 +3,7 @@ package com.javatest.databaseTestApp.controller;
 import com.javatest.databaseTestApp.dto.UserContactCreateDto;
 import com.javatest.databaseTestApp.dto.UserContactDto;
 import com.javatest.databaseTestApp.dto.UserContactUpdateDto;
+import com.javatest.databaseTestApp.dto.UserInfoDto;
 import com.javatest.databaseTestApp.service.UserContactService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -27,7 +28,7 @@ public class UserContactController {
 
     private final UserContactService userContactService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<UserContactDto> create(@RequestBody UserContactCreateDto userContactCreateDto) {
 
         log.info("createContact: userContactCreateDto = {}", userContactCreateDto);
@@ -41,6 +42,13 @@ public class UserContactController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(userContactService.readAll());
+    }
+
+    @GetMapping("/{userInfoId}")
+    public ResponseEntity<UserContactDto> get(@PathVariable Integer userInfoId) {
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userContactService.getById(userInfoId));
     }
 
     @PutMapping("/{userInfoId}")

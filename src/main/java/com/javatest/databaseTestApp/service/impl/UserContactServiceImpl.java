@@ -49,11 +49,19 @@ public class UserContactServiceImpl implements UserContactService {
     }
 
     @Override
-    public UserContactDto update(Integer userId, UserContactUpdateDto userContactUpdateDto) {
+    public UserContactDto getById(Integer userInfoId) {
+        return userContactConverter.fromUserDetailsToUserContactDto(
+                userInfoRepository.findByIdAndIsDeletedIsFalse(userInfoId)
+                        .orElseThrow(() -> new UserNotFoundException(userInfoId))
+        );
+    }
+
+    @Override
+    public UserContactDto update(Integer userInfoId, UserContactUpdateDto userContactUpdateDto) {
 
         UserInfo userContactToUpdate = userInfoRepository
-                .findByIdAndIsDeletedIsFalse(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
+                .findByIdAndIsDeletedIsFalse(userInfoId)
+                .orElseThrow(() -> new UserNotFoundException(userInfoId));
 
         userContactToUpdate.setSurname(userContactUpdateDto.getSurname());
         userContactToUpdate.setName(userContactUpdateDto.getName());
@@ -67,11 +75,11 @@ public class UserContactServiceImpl implements UserContactService {
     }
 
     @Override
-    public void delete(Integer userId) {
+    public void delete(Integer userInfoId) {
 
         UserInfo userContactToDelete = userInfoRepository
-                .findByIdAndIsDeletedIsFalse(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
+                .findByIdAndIsDeletedIsFalse(userInfoId)
+                .orElseThrow(() -> new UserNotFoundException(userInfoId));
 
         userContactToDelete.setIsDeleted(true);
         userContactToDelete.setUpdatedAt(new Date());
