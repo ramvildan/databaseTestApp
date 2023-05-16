@@ -6,13 +6,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
-public class UserDetailsUpdateDto {
+public class UserInfoUpdateDto {
 
     @Size(min = 1, max = 255)
     @NotBlank

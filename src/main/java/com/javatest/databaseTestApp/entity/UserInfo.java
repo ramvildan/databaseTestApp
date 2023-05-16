@@ -10,15 +10,14 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@Table(name = "user_details_table")
+@Table(name = "user_info_table")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDetails {
+public class UserInfo {
 
     @Id
-    @Column(name = "user_details_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -40,7 +39,7 @@ public class UserDetails {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "userDetails", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "userInfo", fetch = FetchType.LAZY)
     private Photo photo;
 
     @Column(name = "created_at")

@@ -21,54 +21,54 @@ import java.io.IOException;
 
 @Log4j2
 @RestController
-@RequestMapping("users/details/photo")
+@RequestMapping("users/info/photo")
 @RequiredArgsConstructor
 public class PhotoController {
 
     private final PhotoService photoService;
 
-//    @PreAuthorize("hasAuthority('APP_USER')")
-    @PostMapping("/create/{userDetailsId}")
-    public ResponseEntity<PhotoDto> upload(@PathVariable("userDetailsId") Integer userDetailsId,
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PostMapping("/create/{userInfoId}")
+    public ResponseEntity<PhotoDto> upload(@PathVariable("userInfoId") Integer userInfoId,
                                            @RequestParam("photo") MultipartFile file) throws IOException {
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(photoService.upload(userDetailsId, file));
+                .body(photoService.upload(userInfoId, file));
     }
 
-//    @PreAuthorize("hasAuthority('APP_USER')")
-    @PutMapping("/update/{userDetailsId}")
-    public ResponseEntity<PhotoDto> update(@PathVariable("userDetailsId") Integer userDetailsId,
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PutMapping("/update/{userInfoId}")
+    public ResponseEntity<PhotoDto> update(@PathVariable("userInfoId") Integer userInfoId,
                                                 @RequestParam("photo") MultipartFile file) throws IOException {
 
-        log.info("updatePhoto: userDetailsId = {}", userDetailsId);
+        log.info("updatePhoto: userInfoId = {}", userInfoId);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(photoService.update(userDetailsId, file));
+                .body(photoService.update(userInfoId, file));
     }
 
-//    @PreAuthorize("hasAuthority('APP_USER')")
-    @DeleteMapping("/delete/{userDetailsId}")
-    public ResponseEntity<Void> delete(@PathVariable("userDetailsId") Integer userDetailsId) {
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @DeleteMapping("/delete/{userInfoId}")
+    public ResponseEntity<Void> delete(@PathVariable("userInfoId") Integer userInfoId) {
 
-        log.info("deletePhoto: userDetailsId = {}", userDetailsId);
+        log.info("deletePhoto: userInfoId = {}", userInfoId);
 
-        photoService.delete(userDetailsId);
+        photoService.delete(userInfoId);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-//    @PreAuthorize("hasAuthority('APP_USER')")
-    @GetMapping("/get/info/{userDetailsId}")
-    public ResponseEntity<PhotoDto> getDetails(@PathVariable("userDetailsId") Integer userDetailsId) {
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @GetMapping("/get/info/{userInfoId}")
+    public ResponseEntity<PhotoDto> getDetails(@PathVariable("userInfoId") Integer userInfoId) {
 
-        log.info("getPhotoDetails: userDetailsId = {}", userDetailsId);
+        log.info("getPhotoDetails: userInfoId = {}", userInfoId);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(photoService.getPhotoDetailsById(userDetailsId));
+                .body(photoService.getPhotoDetailsById(userInfoId));
     }
 
-//    @PreAuthorize("hasAuthority('APP_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/get/{userDetailsId}")
     public ResponseEntity<byte[]> getPhoto(@PathVariable("userDetailsId") Integer userDetailsId) {
 

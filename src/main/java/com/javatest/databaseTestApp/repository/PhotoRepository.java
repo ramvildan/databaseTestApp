@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface PhotoRepository extends JpaRepository<Photo, Integer> {
 
-    Optional<Photo> findByUserDetailsIdAndIsDeletedIsFalse(Integer userDetailsId);
+    Optional<Photo> findByUserInfoIdAndIsDeletedIsFalse(Integer userInfoId);
 }

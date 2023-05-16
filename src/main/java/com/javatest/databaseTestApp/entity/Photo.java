@@ -6,10 +6,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +24,6 @@ import java.util.Date;
 public class Photo {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -40,7 +37,7 @@ public class Photo {
     private byte[] photo;
 
     @OneToOne(fetch = FetchType.EAGER)
-    private UserDetails userDetails;
+    private UserInfo userInfo;
 
     @Column(name = "uploaded_at")
     private Date uploadedAt;

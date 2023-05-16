@@ -11,8 +11,7 @@ import java.util.List;
 @Service
 public interface UserContactService {
 
-    UserContactDto create(Integer userId,
-                          @Valid UserContactCreateDto userContactCreateDto);
+    UserContactDto create(@Valid UserContactCreateDto userContactCreateDto);
 
     List<UserContactDto> readAll();
 

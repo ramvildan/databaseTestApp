@@ -1,9 +1,9 @@
 package com.javatest.databaseTestApp.controller;
 
-import com.javatest.databaseTestApp.dto.UserContactCreateDto;
-import com.javatest.databaseTestApp.dto.UserContactDto;
-import com.javatest.databaseTestApp.dto.UserContactUpdateDto;
-import com.javatest.databaseTestApp.service.UserContactService;
+import com.javatest.databaseTestApp.dto.UserInfoCreateDto;
+import com.javatest.databaseTestApp.dto.UserInfoDto;
+import com.javatest.databaseTestApp.dto.UserInfoUpdateDto;
+import com.javatest.databaseTestApp.service.UserInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -21,49 +21,49 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("users/contacts")
+@RequestMapping("users/info")
 @RequiredArgsConstructor
 @Log4j2
-public class UserContactController {
+public class UserInfoController {
 
-    private final UserContactService userContactService;
+    private final UserInfoService userInfoService;
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping("/create")
-    public ResponseEntity<UserContactDto> create(@RequestBody UserContactCreateDto userContactCreateDto) {
+    public ResponseEntity<UserInfoDto> create(@RequestBody UserInfoCreateDto userInfoCreateDto) {
 
-        log.info("createContact: userContactCreateDto = {}", userContactCreateDto);
+        log.info("createInfo: userInfoCreateDto = {}", userInfoCreateDto);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userContactService.create(userContactCreateDto));
+                .body(userInfoService.create(userInfoCreateDto));
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping
-    public ResponseEntity<List<UserContactDto>> readAll() {
+    public ResponseEntity<List<UserInfoDto>> findAll() {
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userContactService.readAll());
+                .body(userInfoService.readAll());
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
     @PutMapping("/{userInfoId}")
-    public ResponseEntity<UserContactDto> update(@RequestBody UserContactUpdateDto userContactUpdateDto,
-                                                 @PathVariable Integer userInfoId) {
+    public ResponseEntity<UserInfoDto> update(@RequestBody UserInfoUpdateDto userInfoUpdateDto,
+                                              @PathVariable Integer userInfoId) {
 
-        log.info("updateContact: userContactUpdateDto = {}, userId = {}", userContactUpdateDto, userInfoId);
+        log.info("updateInfo: userInfoUpdateDto = {}, userId = {}", userInfoUpdateDto, userInfoId);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userContactService.update(userInfoId, userContactUpdateDto));
+                .body(userInfoService.update(userInfoId, userInfoUpdateDto));
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
     @DeleteMapping("/{userInfoId}")
     public ResponseEntity<Void> delete(@PathVariable Integer userInfoId) {
 
-        log.info("deleteContact: userInfoId = {}", userInfoId);
+        log.info("deleteInfo: userId = {}", userInfoId);
 
-        userContactService.delete(userInfoId);
+        userInfoService.delete(userInfoId);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

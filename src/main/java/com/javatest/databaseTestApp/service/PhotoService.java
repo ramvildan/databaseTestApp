@@ -9,13 +9,13 @@ import java.io.IOException;
 @Service
 public interface PhotoService {
 
-    PhotoDto upload(Integer userDetailsId, MultipartFile file) throws IOException;
+    PhotoDto upload(Integer userInfoId, MultipartFile file) throws IOException;
 
-    PhotoDto update(Integer userDetailsId, MultipartFile file) throws IOException;
+    PhotoDto update(Integer userInfoId, MultipartFile file) throws IOException;
 
-    void delete(Integer userDetailsId);
+    void delete(Integer userInfoId);
 
-    PhotoDto getPhotoDetailsById(Integer userDetailsId);
+    PhotoDto getPhotoDetailsById(Integer userInfoId);
 
-    byte[] getPhotoById(Integer userId);
+    byte[] getPhotoById(Integer userInfoId);
 }

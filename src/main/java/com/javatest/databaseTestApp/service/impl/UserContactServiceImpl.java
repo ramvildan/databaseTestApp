@@ -4,9 +4,9 @@ import com.javatest.databaseTestApp.converter.UserContactConverter;
 import com.javatest.databaseTestApp.dto.UserContactCreateDto;
 import com.javatest.databaseTestApp.dto.UserContactDto;
 import com.javatest.databaseTestApp.dto.UserContactUpdateDto;
-import com.javatest.databaseTestApp.entity.UserDetails;
+import com.javatest.databaseTestApp.entity.UserInfo;
 import com.javatest.databaseTestApp.exception.UserNotFoundException;
-import com.javatest.databaseTestApp.repository.UserDetailsRepository;
+import com.javatest.databaseTestApp.repository.UserInfoRepository;
 import com.javatest.databaseTestApp.service.UserContactService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserContactServiceImpl implements UserContactService {
 
-    private final UserDetailsRepository userDetailsRepository;
+    private final UserInfoRepository userInfoRepository;
 
     private final UserContactConverter userContactConverter;
 
     @Override
-    public UserContactDto create(Integer userId, UserContactCreateDto userContactCreateDto) {
+    public UserContactDto create(UserContactCreateDto userContactCreateDto) {
 
-        UserDetails newUserContact = UserDetails.builder()
+        UserInfo newUserContact = UserInfo.builder()
                 .surname(userContactCreateDto.getSurname())
                 .name(userContactCreateDto.getName())
                 .patronymic(userContactCreateDto.getPatronymic())
@@ -37,13 +37,13 @@ public class UserContactServiceImpl implements UserContactService {
                 .build();
 
         return userContactConverter.fromUserDetailsToUserContactDto(
-                userDetailsRepository.save(newUserContact)
+                userInfoRepository.save(newUserContact)
         );
     }
 
     @Override
     public List<UserContactDto> readAll() {
-        return userDetailsRepository.findAllByIsDeletedIsFalse().stream()
+        return userInfoRepository.findAllByIsDeletedIsFalse().stream()
                 .map(userContactConverter::fromUserDetailsToUserContactDto)
                 .collect(Collectors.toList());
     }
@@ -51,7 +51,7 @@ public class UserContactServiceImpl implements UserContactService {
     @Override
     public UserContactDto update(Integer userId, UserContactUpdateDto userContactUpdateDto) {
 
-        UserDetails userContactToUpdate = userDetailsRepository
+        UserInfo userContactToUpdate = userInfoRepository
                 .findByIdAndIsDeletedIsFalse(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
@@ -62,14 +62,14 @@ public class UserContactServiceImpl implements UserContactService {
         userContactToUpdate.setUpdatedAt(new Date());
 
         return userContactConverter.fromUserDetailsToUserContactDto(
-                userDetailsRepository.save(userContactToUpdate)
+                userInfoRepository.save(userContactToUpdate)
         );
     }
 
     @Override
     public void delete(Integer userId) {
 
-        UserDetails userContactToDelete = userDetailsRepository
+        UserInfo userContactToDelete = userInfoRepository
                 .findByIdAndIsDeletedIsFalse(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
@@ -77,7 +77,7 @@ public class UserContactServiceImpl implements UserContactService {
         userContactToDelete.setUpdatedAt(new Date());
 
         userContactConverter.fromUserDetailsToUserContactDto(
-                userDetailsRepository.save(userContactToDelete)
+                userInfoRepository.save(userContactToDelete)
         );
     }
 }

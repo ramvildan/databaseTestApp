@@ -4,9 +4,9 @@ import com.javatest.databaseTestApp.converter.PhotoConverter;
 import com.javatest.databaseTestApp.dto.PhotoDto;
 import com.javatest.databaseTestApp.entity.Photo;
 import com.javatest.databaseTestApp.exception.PhotoNotFoundException;
-import com.javatest.databaseTestApp.exception.UserDetailsNotFoundException;
+import com.javatest.databaseTestApp.exception.UserInfoNotFoundException;
 import com.javatest.databaseTestApp.repository.PhotoRepository;
-import com.javatest.databaseTestApp.repository.UserDetailsRepository;
+import com.javatest.databaseTestApp.repository.UserInfoRepository;
 import com.javatest.databaseTestApp.service.PhotoService;
 import com.javatest.databaseTestApp.util.PhotoUtility;
 import lombok.RequiredArgsConstructor;
@@ -20,21 +20,21 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class PhotoServiceImpl implements PhotoService {
 
-    private final UserDetailsRepository userDetailsRepository;
+    private final UserInfoRepository userInfoRepository;
 
     private final PhotoConverter photoConverter;
 
     private final PhotoRepository photoRepository;
 
     @Override
-    public PhotoDto upload(Integer userDetailsId, MultipartFile file) throws IOException {
+    public PhotoDto upload(Integer userInfoId, MultipartFile file) throws IOException {
 
         Photo uploadedPhoto = Photo.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
                 .photo(PhotoUtility.compressPhoto(file.getBytes()))
-                .userDetails(userDetailsRepository.findById(userDetailsId)
-                        .orElseThrow(() -> new UserDetailsNotFoundException(userDetailsId)))
+                .userInfo(userInfoRepository.findById(userInfoId)
+                        .orElseThrow(() -> new UserInfoNotFoundException(userInfoId)))
                 .uploadedAt(new Date())
                 .updatedAt(new Date())
                 .isDeleted(false)
@@ -46,11 +46,11 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public PhotoDto update(Integer userDetailsId, MultipartFile file) throws IOException {
+    public PhotoDto update(Integer userInfoId, MultipartFile file) throws IOException {
 
         Photo photoToUpdate = photoRepository
-                .findById(userDetailsId)
-                .orElseThrow(() -> new UserDetailsNotFoundException(userDetailsId));
+                .findById(userInfoId)
+                .orElseThrow(() -> new UserInfoNotFoundException(userInfoId));
 
         photoToUpdate.setName(file.getOriginalFilename());
         photoToUpdate.setType(file.getContentType());
@@ -63,11 +63,11 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public void delete(Integer userDetailsId) {
+    public void delete(Integer userInfoId) {
 
         Photo photoToDelete = photoRepository
-                .findByUserDetailsIdAndIsDeletedIsFalse(userDetailsId)
-                .orElseThrow(() -> new PhotoNotFoundException(userDetailsId));
+                .findByUserInfoIdAndIsDeletedIsFalse(userInfoId)
+                .orElseThrow(() -> new PhotoNotFoundException(userInfoId));
 
         photoToDelete.setIsDeleted(true);
         photoToDelete.setUpdatedAt(new Date());
@@ -78,11 +78,11 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public PhotoDto getPhotoDetailsById(Integer userDetailsId) {
+    public PhotoDto getPhotoDetailsById(Integer userInfoId) {
 
         Photo dbPhoto = photoRepository
-                .findByUserDetailsIdAndIsDeletedIsFalse(userDetailsId)
-                .orElseThrow(() -> new PhotoNotFoundException(userDetailsId));
+                .findByUserInfoIdAndIsDeletedIsFalse(userInfoId)
+                .orElseThrow(() -> new PhotoNotFoundException(userInfoId));
 
         return PhotoDto.builder()
                 .name(dbPhoto.getName())
@@ -92,11 +92,11 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public byte[] getPhotoById(Integer userDetailsId) {
+    public byte[] getPhotoById(Integer userInfoId) {
 
         Photo dbPhoto = photoRepository
-                .findByUserDetailsIdAndIsDeletedIsFalse(userDetailsId)
-                .orElseThrow(() -> new PhotoNotFoundException(userDetailsId));
+                .findByUserInfoIdAndIsDeletedIsFalse(userInfoId)
+                .orElseThrow(() -> new PhotoNotFoundException(userInfoId));
 
         return PhotoUtility.decompressPhoto(dbPhoto.getPhoto());
     }
