@@ -25,6 +25,8 @@ import java.io.IOException;
 public class JwtTokenFilter extends OncePerRequestFilter {
     private static final String AUTHORIZATION = "Authorization";
 
+    private static final String BEARER = "Bearer ";
+
     private final JwtProvider jwtProvider;
 
     @Override
@@ -51,16 +53,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private boolean hasAuthorizationBearer(HttpServletRequest request) {
         String header = request.getHeader(AUTHORIZATION);
 
-        if (ObjectUtils.isEmpty(header) || !header.startsWith("Bearer")) {
-            return false;
-        }
-
-        return true;
+        return !ObjectUtils.isEmpty(header) && header.startsWith(BEARER);
     }
 
     private String getAccessToken(HttpServletRequest request) {
         String header = request.getHeader(AUTHORIZATION);
-        String token = header.split(" ")[1].trim();
+        String token = header.substring(BEARER.length()).trim();
         return token;
     }
 
