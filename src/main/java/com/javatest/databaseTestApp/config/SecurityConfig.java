@@ -1,7 +1,7 @@
 package com.javatest.databaseTestApp.config;
 
 import com.javatest.databaseTestApp.repository.UserRepository;
-import com.javatest.databaseTestApp.security.filter.JwtTokenFilter;
+import com.javatest.databaseTestApp.config.security.filter.JwtTokenFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +24,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfig {
+
     private final UserRepository userRepository;
+
     private final JwtTokenFilter jwtTokenFilter;
 
     @Bean

@@ -40,12 +40,16 @@ public class UserContactController {
     @GetMapping
     public ResponseEntity<List<UserContactDto>> readAll() {
 
+        log.info("readAllUserContacts: ");
+
         return ResponseEntity.status(HttpStatus.OK)
                 .body(userContactService.readAll());
     }
 
     @GetMapping("/{userInfoId}")
     public ResponseEntity<UserContactDto> get(@PathVariable Integer userInfoId) {
+
+        log.info("getUserContact: userInfoId = {}", userInfoId);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(userContactService.getById(userInfoId));

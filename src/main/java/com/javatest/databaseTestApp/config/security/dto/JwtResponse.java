@@ -1,4 +1,4 @@
-package com.javatest.databaseTestApp.security.dto;
+package com.javatest.databaseTestApp.config.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

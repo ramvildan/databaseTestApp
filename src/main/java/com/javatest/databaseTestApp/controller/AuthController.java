@@ -1,9 +1,9 @@
 package com.javatest.databaseTestApp.controller;
 
 import com.javatest.databaseTestApp.dto.UserCreateDto;
-import com.javatest.databaseTestApp.security.dto.JwtRequest;
-import com.javatest.databaseTestApp.security.dto.JwtResponse;
-import com.javatest.databaseTestApp.security.dto.RefreshJwtRequest;
+import com.javatest.databaseTestApp.config.security.dto.JwtRequest;
+import com.javatest.databaseTestApp.config.security.dto.JwtResponse;
+import com.javatest.databaseTestApp.config.security.dto.RefreshJwtRequest;
 import com.javatest.databaseTestApp.service.AuthService;
 import com.javatest.databaseTestApp.service.UserService;
 import jakarta.validation.Valid;

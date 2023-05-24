@@ -1,4 +1,4 @@
-package com.javatest.databaseTestApp.security.dto;
+package com.javatest.databaseTestApp.config.security.provider;
 
 import com.javatest.databaseTestApp.entity.User;
 import io.jsonwebtoken.Claims;
@@ -126,6 +126,4 @@ public class JwtProvider {
                 .parseClaimsJws(token)
                 .getBody();
     }
-
-
 }

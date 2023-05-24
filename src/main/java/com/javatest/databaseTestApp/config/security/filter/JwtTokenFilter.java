@@ -1,7 +1,7 @@
-package com.javatest.databaseTestApp.security.filter;
+package com.javatest.databaseTestApp.config.security.filter;
 
+import com.javatest.databaseTestApp.config.security.provider.JwtProvider;
 import com.javatest.databaseTestApp.entity.User;
-import com.javatest.databaseTestApp.security.dto.JwtProvider;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

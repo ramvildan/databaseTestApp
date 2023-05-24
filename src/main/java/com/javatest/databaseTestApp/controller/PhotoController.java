@@ -30,6 +30,8 @@ public class PhotoController {
     public ResponseEntity<PhotoDto> upload(@PathVariable("userInfoId") Integer userInfoId,
                                            @RequestParam("photo") MultipartFile file) throws IOException {
 
+        log.info("uploadPhoto: userInfoId = {}", userInfoId);
+
         return ResponseEntity.status(HttpStatus.OK)
                 .body(photoService.upload(userInfoId, file));
     }

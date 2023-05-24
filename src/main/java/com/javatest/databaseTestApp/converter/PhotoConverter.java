@@ -20,7 +20,7 @@ public class PhotoConverter {
                 .id(photo.getId())
                 .name(photo.getName())
                 .type(photo.getType())
-                .photo(PhotoUtility.decompressPhoto(photo.getPhoto()))
+                .photo(photo.getPhoto())
                 .build();
     }
 }

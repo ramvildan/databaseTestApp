@@ -1,4 +1,4 @@
-package com.javatest.databaseTestApp.security.dto;
+package com.javatest.databaseTestApp.config.security.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

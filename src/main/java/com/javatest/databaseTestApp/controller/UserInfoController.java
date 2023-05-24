@@ -37,7 +37,9 @@ public class UserInfoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserInfoDto>> findAll() {
+    public ResponseEntity<List<UserInfoDto>> readAll() {
+
+        log.info("readAllUserInfo: ");
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(userInfoService.readAll());
@@ -45,6 +47,8 @@ public class UserInfoController {
 
     @GetMapping("/{userInfoId}")
     public ResponseEntity<UserInfoDto> get(@PathVariable Integer userInfoId) {
+
+        log.info("getUserInfo: userInfoId = {}", userInfoId);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(userInfoService.getById(userInfoId));
