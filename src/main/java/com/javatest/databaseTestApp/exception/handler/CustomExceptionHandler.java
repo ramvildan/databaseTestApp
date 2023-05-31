@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+// Все наследники ловятся вместе с родителем
 @Log4j2
 @RestControllerAdvice
 public class CustomExceptionHandler {
@@ -21,48 +22,13 @@ public class CustomExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseError handle(BadRequestException exception) {
         log.error(exception.getMessage(), exception);
-        return new ResponseError(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return new ResponseError(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseError handle(ForbiddenRequestException exception) {
         log.error(exception.getMessage(), exception);
-        return new ResponseError(HttpStatus.FORBIDDEN, exception.getMessage());
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseError handle(UserNotFoundException exception) {
-        log.error(exception.getMessage(), exception);
-        return new ResponseError(HttpStatus.BAD_REQUEST, exception.getMessage());
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseError handle(PhotoNotFoundException exception) {
-        log.error(exception.getMessage(), exception);
-        return new ResponseError(HttpStatus.BAD_REQUEST, exception.getMessage());
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseError handle(UserInfoNotFoundException exception) {
-        log.error(exception.getMessage(), exception);
-        return new ResponseError(HttpStatus.BAD_REQUEST, exception.getMessage());
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseError handle(WrongPasswordException exception) {
-        log.error(exception.getMessage(), exception);
-        return new ResponseError(HttpStatus.FORBIDDEN, exception.getMessage());
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseError handle(WrongTokenException exception) {
-        log.error(exception.getMessage(), exception);
-        return new ResponseError(HttpStatus.FORBIDDEN, exception.getMessage());
+        return new ResponseError(exception.getMessage(), HttpStatus.FORBIDDEN);
     }
 }

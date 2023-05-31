@@ -1,12 +1,12 @@
 package com.javatest.databaseTestApp.exception.handler;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
 public class ResponseError {
 
     private final HttpStatus status;
@@ -15,4 +15,9 @@ public class ResponseError {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private final LocalDateTime time = LocalDateTime.now();
+
+    public ResponseError(String message, HttpStatus status) {
+        this.status = status;
+        this.message = message;
+    }
 }
